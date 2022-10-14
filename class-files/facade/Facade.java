@@ -12,7 +12,16 @@ public class Facade {
 
 	private Person thePerson;
 
-	public boolean login() {
+	public boolean login(String username, String password) {
+		// write sql query
+
+		// SELECT TOP 1 products.id FROM products WHERE products.id = ?;
+
+
+		
+
+
+
 		return false;
 	}
 
