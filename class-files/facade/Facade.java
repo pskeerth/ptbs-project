@@ -17,12 +17,9 @@ public class Facade {
 
 		// SELECT TOP 1 products.id FROM products WHERE products.id = ?;
 
+		Login login = new Login();
+		return login.validateUser(username, password);
 
-		
-
-
-
-		return false;
 	}
 
 	public void addTrading() {
