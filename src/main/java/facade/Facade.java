@@ -1,12 +1,18 @@
 package facade;
 
+import product.Buyer;
 import product.MeatProductMenu;
+import product.Person;
+import product.Seller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Facade {
+
+
 
 	private int UserType;
 
@@ -30,16 +36,30 @@ public class Facade {
 		return result;
 	}
 
-	public void addTrading(Map menuItems) {
-
-//		createProductList();
-
-		meatProductMenu.showMenu(menuItems);
-
+	public Product addTrading(Map<String, ArrayList<String>> menuItems) {
+		System.out.println("Enter 0 for meat, 1 for produce");
+		nProductCategory = sc.nextInt();
+		if(!((nProductCategory == 0) || (nProductCategory == 1))){
+			System.out.println("Invalid option");
+		}
+		else {
+			if (UserType == 0) {
+				thePerson = new Buyer();
+				return thePerson.createProductMenu(menuItems, nProductCategory);
+			} else {
+				thePerson = new Seller();
+				return thePerson.createProductMenu(menuItems, nProductCategory);
+			}
+		}
+		return new Product(-1, "");
 	}
 
 	public void viewTrading(Map menuItems) {
 
+	}
+
+	public int getUserType() {
+		return UserType;
 	}
 
 	/**

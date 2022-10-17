@@ -1,4 +1,6 @@
 Meat:Beef
 Meat:Chicken
-Produce:Lettuce
-Produce:Lemons
+Meat:Ham
+Produce:Broccoli
+Produce:Banana
+Produce:ApplesProduce:Spinach

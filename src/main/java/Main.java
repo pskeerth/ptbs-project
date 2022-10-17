@@ -1,14 +1,12 @@
 import facade.Facade;
 import facade.Login;
+import facade.Product;
 import facade.UserInfoItem;
 
+import java.io.*;
 import java.lang.Object;
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,9 +21,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         Facade facade = new Facade();
-        String credentialsFilePath1 = "src/main/resources/username-pwd.txt";
+        Product product;
+        String credentialsFilePath1 = "src/main/resources/buyers.txt";
         String menuFilePath = "src/main/resources/meat-produce-menu.txt";
-        String sellerLoginsFilePath = "src/main/resources/seller.txt";
+        String sellerLoginsFilePath = "src/main/resources/sellers.txt";
+        String userProductLogFile = "src/main/resources/user-product.txt";
         HashMap userCredentials = new HashMap<String, String>();
         HashMap typeOfUser = new HashMap<String, String>();
         String line;
@@ -79,9 +79,8 @@ public class Main {
 
         String username;
         String password;
-        String input;
         int choice;
-        String userType;
+        int userType;
         UserInfoItem userinfoitem = new UserInfoItem();
         System.out.println("Username :  ");
         username = sc.next();
@@ -108,23 +107,46 @@ public class Main {
 //            else
 //                System.exit(0);
         }
-            while (true) {
-                System.out.println("Enter 0 to Add Trade, 1 to ");
-                choice = sc.nextInt();
-                switch (choice) {
+        System.out.println("Login Successful");
 
-                    case 0:
-                        facade.addTrading(menuItems);
-                        break;
-                    case 1:
-                        facade.viewTrading(menuItems);
-                        break;
-                    default:
-                        System.exit(0);
-                }
+        userType = facade.getUserType();
+        while (true) {
+            System.out.println("Enter 0 to Add Trade, 1 to View Trade ");
+            choice = sc.nextInt();
+            switch (choice) {
+
+                case 0:
+                    product = facade.addTrading(menuItems);
+                    if (product.getnCategoryType() != -1) {
+                        String trade = username + ":" + product.getItem();
+                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userProductLogFile, true));
+                        bufferedWriter.write(trade + "\n");
+                        System.out.println("Trade added to user Product log file");
+                        bufferedWriter.close();
+                    } else {
+                        System.out.println("Invalid trade");
+                    }
+
+                    if(userType==1){
+                        String category = product.getnCategoryType() == 0 ? "Meat" : "Produce";
+                        String addMenuItem = category + ":" + product.getItem();
+                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(menuFilePath, true));
+                        bufferedWriter.write("\n" + addMenuItem);
+                        System.out.println("Added new product to products file");
+                        bufferedWriter.close();
+                    }
+                    break;
+                case 1:
+                    facade.viewTrading(menuItems);
+                    break;
+                case -1:
+                    System.exit(0);
+                default:
+                    System.out.println("Enter a valid option");
             }
-
         }
+
+    }
 
 
     }

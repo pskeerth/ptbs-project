@@ -1,6 +1,10 @@
 package product;
 
+import facade.Product;
 import facade.ProductMenu;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public abstract class Person {
 
@@ -8,7 +12,7 @@ public abstract class Person {
 
 	private ProductMenu productMenu;
 
-	public abstract void showMenu();
+	public abstract void showMenu(Map<String, ArrayList<String>> menuItems);
 
 	/**
 	 *  
@@ -38,6 +42,6 @@ public abstract class Person {
 
 	}
 
-	public abstract ProductMenu CreateProductMenu();
+	public abstract Product createProductMenu(Map<String, ArrayList<String>> menuItems, int nProductCategory);
 
 }

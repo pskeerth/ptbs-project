@@ -11,11 +11,13 @@ public class ProduceProductMenu implements ProductMenu {
 	 *  
 	 */
 	public void showMenu(Map menuItems) {
-		System.out.println("Meat Product Menu:");
-		for(Object item:menuItems.entrySet()) {
-			System.out.println(item.toString());
-		}
+		System.out.println("Produce Menu:");
+		for (Object key : menuItems.keySet()) {
+			if (key.equals("Produce")) {
+				System.out.println(menuItems.get(key));
+			}
 
+		}
 	}
 
 

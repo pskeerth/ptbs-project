@@ -1,18 +1,42 @@
 package product;
 
+import facade.Product;
 import facade.ProductMenu;
 
-public class Buyer extends Person {
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
 
+public class Buyer extends Person {
+	private ProductMenu productMenu;
+	private Scanner sc = new Scanner(System.in);
+	public Buyer() {
+		super();
+	}
 	/**
 	 *  
 	 */
-	public void showMenu() {
-
+	public void showMenu(Map<String, ArrayList<String>> menuItems) {
+		productMenu.showMenu(menuItems);
 	}
 
-	public ProductMenu CreateProductMenu() {
-		return null;
+	public Product createProductMenu(Map<String, ArrayList<String>> menuItems, int nProductCategory) {
+		String category;
+		if(nProductCategory==0) {
+			productMenu = new MeatProductMenu();
+			category = "Meat";
+		} else {
+			productMenu = new ProduceProductMenu();
+			category ="Produce";
+		}
+		showMenu(menuItems);
+		System.out.println("Enter item you would like to buy");
+		String item = sc.next();
+		item = item.substring(0,1).toUpperCase() + item.substring(1);
+		if(menuItems.get(category).contains(item))
+			return new Product(nProductCategory, item);
+		else
+			return new Product(-1, item);
 	}
 
 }

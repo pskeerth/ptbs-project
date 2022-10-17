@@ -1,18 +1,41 @@
 package product;
 
+import facade.Product;
 import facade.ProductMenu;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Seller extends Person {
 
+	private ProductMenu productMenu;
+	private Scanner sc = new Scanner(System.in);
+	public Seller() {
+		super();
+	}
 	/**
 	 *  
 	 */
-	public void showMenu() {
-
+	public void showMenu(Map<String, ArrayList<String>> menuItems) {
+		productMenu.showMenu(menuItems);
 	}
 
-	public ProductMenu CreateProductMenu() {
-		return null;
+	public Product createProductMenu(Map<String, ArrayList<String>> menuItems, int nProductCategory) {
+		String category;
+		if(nProductCategory==0) {
+			productMenu = new MeatProductMenu();
+			category = "Meat";
+		} else {
+			productMenu = new ProduceProductMenu();
+			category ="Produce";
+		}
+		System.out.println("Existing menu items:");
+		showMenu(menuItems);
+		System.out.println("Enter item to add");
+		String item = sc.next();
+		item = item.substring(0,1).toUpperCase() + item.substring(1);
+		return new Product(nProductCategory, item);
 	}
 
 }
