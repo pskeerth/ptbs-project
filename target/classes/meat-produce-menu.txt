@@ -1,0 +1,4 @@
+Meat:Beef
+Meat:Chicken
+Produce:Lettuce
+Produce:Lemons

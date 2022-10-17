@@ -2,6 +2,9 @@ package facade;
 
 import product.Person;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public interface ProductMenu {
 
 	Person person = null;
@@ -9,12 +12,12 @@ public interface ProductMenu {
 	/**
 	 *  
 	 */
-	public abstract void showMenu();
+	public abstract void showMenu(Map menuItems);
 
 	/**
 	 *  
 	 */
-	public abstract void showAddButtton();
+	public abstract void showAddButton();
 
 	/**
 	 *  

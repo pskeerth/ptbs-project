@@ -1,6 +1,9 @@
 package facade;
 
+import product.MeatProductMenu;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Facade {
@@ -14,26 +17,28 @@ public class Facade {
 	private ClassProductList theProductList;
 
 	private Person thePerson;
+	private MeatProductMenu meatProductMenu = new MeatProductMenu();
 	Scanner sc = new Scanner(System.in);
 
-	public boolean login(String username, String password, HashMap userCredentials) {
+	public boolean login(String username, String password, HashMap userCredentials, HashMap typeOfUser) {
 		Boolean result;
 		Login login = new Login();
-		result = login.validateUser(username, password, userCredentials );
+		result = login.validateUser(username, password, userCredentials);
 		if(result) {
-
+			UserType = (int) typeOfUser.get(username);
 		}
 		return result;
 	}
 
-	public void addTrading() {
+	public void addTrading(Map menuItems) {
 
-		createProductList();
+//		createProductList();
 
+		meatProductMenu.showMenu(menuItems);
 
 	}
 
-	public void viewTrading() {
+	public void viewTrading(Map menuItems) {
 
 	}
 

@@ -1,5 +1,7 @@
 package iterators;
 
+import facade.Product;
+
 public class ProductIterator implements ListIterator {
 
 	private ClassProductList classProductList;
@@ -8,20 +10,13 @@ public class ProductIterator implements ListIterator {
 		return false;
 	}
 
-	public Offering Next() {
+	public Product Next() {
 		return null;
 	}
 
-	@Override
+
 	public void MoveToHead() {
-
-	}
-
-	/**
-	 *  
-	 */
-	public void MoveToHHead() {
-
+		
 	}
 
 	/**

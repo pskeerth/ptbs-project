@@ -2,27 +2,29 @@ package product;
 
 import facade.ProductMenu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MeatProductMenu implements ProductMenu {
 
 	/**
 	 *  
 	 *  
 	 */
-	public void showMenu() {
-
+	public void showMenu(Map menuItems) {
+		System.out.println("Meat Product Menu:");
+		for(Object key : menuItems.keySet()) {
+			if(key.equals("Meat"))
+				System.out.println(menuItems.get(key));
+		}
 	}
 
-	@Override
-	public void showAddButtton() {
 
-	}
-
-	/**
-	 *  
-	 */
 	public void showAddButton() {
 
 	}
+
+
 
 	/**
 	 *  
