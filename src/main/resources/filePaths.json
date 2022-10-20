@@ -1,0 +1,6 @@
+{
+  "credentialsFilePath1": "src/main/resources/buyers.txt",
+   "menuFilePath": "src/main/resources/meat-produce-menu.txt",
+   "sellerLoginsFilePath": "src/main/resources/sellers.txt",
+   "userProductLogFile": "src/main/resources/user-product.txt"
+}
