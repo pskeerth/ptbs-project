@@ -42,6 +42,6 @@ public abstract class Person {
 
 	}
 
-	public abstract Product createProductMenu(Map<String, ArrayList<String>> menuItems, int nProductCategory);
+	public abstract Product createProductMenu(Map<String, ArrayList<String>> menuItems, String prodCategory, Map<String, String> productToNumberMap);
 
 }

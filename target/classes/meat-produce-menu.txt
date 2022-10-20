@@ -4,3 +4,6 @@ Meat:Ham
 Produce:Broccoli
 Produce:Banana
 Produce:Apples
+Produce:Spinach
+Meat:Fish
+Perishables: Oranges

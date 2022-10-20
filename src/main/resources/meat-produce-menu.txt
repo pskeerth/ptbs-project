@@ -3,4 +3,7 @@ Meat:Chicken
 Meat:Ham
 Produce:Broccoli
 Produce:Banana
-Produce:ApplesProduce:Spinach
+Produce:Apples
+Produce:Spinach
+Meat:Fish
+Perishables: Oranges

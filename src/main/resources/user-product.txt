@@ -2,3 +2,5 @@ ritu:Chicken
 ritu:Apples
 ritu:Banana
 tutu:Spinach
+ritu:Spinach
+tutu:Fish

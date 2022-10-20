@@ -20,21 +20,13 @@ public class Buyer extends Person {
 		productMenu.showMenu(menuItems);
 	}
 
-	public Product createProductMenu(Map<String, ArrayList<String>> menuItems, int nProductCategory) {
-		String category;
-		if(nProductCategory==0) {
-			productMenu = new MeatProductMenu();
-			category = "Meat";
-		} else {
-			productMenu = new ProduceProductMenu();
-			category ="Produce";
-		}
+	public Product createProductMenu(Map<String, ArrayList<String>> menuItems, String prodCategory, Map<String, String> productToNumberMap) {
 		showMenu(menuItems);
 		System.out.println("Enter item you would like to buy");
 		String item = sc.next();
 		item = item.substring(0,1).toUpperCase() + item.substring(1);
-		if(menuItems.get(category).contains(item))
-			return new Product(nProductCategory, item);
+		if(menuItems.get(prodCategory).contains(item))
+			return new Product(Integer.parseInt(productToNumberMap.get(prodCategory)), item);
 		else
 			return new Product(-1, item);
 	}

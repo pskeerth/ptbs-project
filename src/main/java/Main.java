@@ -56,8 +56,10 @@ public class Main {
             }
         }
 
+        Map<String, String> productToNumberMap = new HashMap<>();
         Map<String, ArrayList<String>> menuItems = new HashMap<>();
         reader = new BufferedReader(new FileReader(menuFilePath));
+        int i=0;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(":", 2);
             if (parts.length >= 2) {
@@ -70,12 +72,16 @@ public class Main {
                 }
                 else {
                     menuItems.put(key, new ArrayList<>(Arrays.asList(value)));
+                    productToNumberMap.put(key, String.valueOf(i));
+                    i=i+1;
                 }
             } else {
                 System.out.println("ignoring line: " + line);
             }
         }
         System.out.println(menuItems);
+        System.out.println(productToNumberMap);
+        facade.createProductList(menuItems, productToNumberMap);
 
         String username;
         String password;
@@ -116,7 +122,7 @@ public class Main {
             switch (choice) {
 
                 case 0:
-                    product = facade.addTrading(menuItems);
+                    product = facade.addTrading(menuItems, productToNumberMap);
                     if (product.getnCategoryType() != -1) {
                         String trade = username + ":" + product.getItem();
                         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userProductLogFile, true));
@@ -129,9 +135,12 @@ public class Main {
 
                     if(userType==1){
                         String category = product.getnCategoryType() == 0 ? "Meat" : "Produce";
+                        ArrayList<String> itemList = menuItems.get(category);
+                        itemList.add(product.getItem());
+                        menuItems.put(category, itemList);
                         String addMenuItem = category + ":" + product.getItem();
                         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(menuFilePath, true));
-                        bufferedWriter.write("\n" + addMenuItem);
+                        bufferedWriter.write( addMenuItem + "\n");
                         System.out.println("Added new product to products file");
                         bufferedWriter.close();
                     }

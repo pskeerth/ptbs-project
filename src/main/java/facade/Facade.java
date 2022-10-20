@@ -1,5 +1,6 @@
 package facade;
 
+import iterators.ProductIterator;
 import product.Buyer;
 import product.MeatProductMenu;
 import product.Person;
@@ -36,22 +37,23 @@ public class Facade {
 		return result;
 	}
 
-	public Product addTrading(Map<String, ArrayList<String>> menuItems) {
-		System.out.println("Enter 0 for meat, 1 for produce");
-		nProductCategory = sc.nextInt();
-		if(!((nProductCategory == 0) || (nProductCategory == 1))){
-			System.out.println("Invalid option");
-		}
-		else {
+	public Product addTrading(Map<String, ArrayList<String>> menuItems, Map<String, String> productToNumberMap) {
+		System.out.println("Enter product category : Eg Meat, Produce etc ..");
+		String prodCategory = sc.next();
+		prodCategory = prodCategory.substring(0,1).toUpperCase() + prodCategory.substring(1);
+		nProductCategory = Integer.parseInt(productToNumberMap.get(prodCategory));
+//		if(!((nProductCategory == 0) || (nProductCategory == 1))){
+//			System.out.println("Invalid option");
+//		}
+//		else {
 			if (UserType == 0) {
 				thePerson = new Buyer();
-				return thePerson.createProductMenu(menuItems, nProductCategory);
+				return thePerson.createProductMenu(menuItems, prodCategory, productToNumberMap);
 			} else {
 				thePerson = new Seller();
-				return thePerson.createProductMenu(menuItems, nProductCategory);
+				return thePerson.createProductMenu(menuItems, prodCategory, productToNumberMap);
 			}
-		}
-		return new Product(-1, "");
+//		}
 	}
 
 	public void viewTrading(Map menuItems) {
@@ -99,19 +101,41 @@ public class Facade {
 	/**
 	 *  
 	 */
-	public void createProductList() {
+	public void createProductList(Map<String, ArrayList<String>> menuItems, Map<String, String> productToNumberMap) {
 
-		System.out.println("Enter the list of items separated by commas");
-		String prodList = sc.next();
+//		System.out.println("Enter the list of items separated by commas");
+//		String prodList = sc.next();
+//
+//
+//		if(UserType==0){
+////			insert into ptbs.buyerTradingMenu (name, trading_menu) VALUES ("user", "cycle, skateboard");
+//			System.out.println("Successfully created buyerTradingMenu");
+//		} else {
+////			insert into ptbs.sellerTradingMenu (name, trading_menu) VALUES ("user", "cycle, skateboard");
+//			System.out.println("Successfully created sellerTradingMenu");
+//		}
 
-		if(UserType==0){
-//			insert into ptbs.buyerTradingMenu (name, trading_menu) VALUES ("user", "cycle, skateboard");
-			System.out.println("Successfully created buyerTradingMenu");
-		} else {
-//			insert into ptbs.sellerTradingMenu (name, trading_menu) VALUES ("user", "cycle, skateboard");
-			System.out.println("Successfully created sellerTradingMenu");
+
+		iterators.ClassProductList classProductList = new iterators.ClassProductList();
+		ProductIterator productIterator;
+		Product product = new Product();
+		for(Map.Entry<String, ArrayList<String>> entry: menuItems.entrySet()) {
+			ArrayList<String> list = entry.getValue();
+			for(String item: list){
+				product.setItem(item);
+				product.setnCategoryType(Integer.parseInt(productToNumberMap.get(entry.getKey())));
+				classProductList.add(product);
+			}
 		}
-
+		int i=0;
+		productIterator = new ProductIterator(classProductList);
+		while (productIterator.hasNext()) {
+			product = productIterator.Next();
+			System.out.println("Product details : no. "+ i);
+			System.out.println(product.getItem());
+			System.out.println(product.getnCategoryType());
+			i+=1;
+		}
 
 	}
 
