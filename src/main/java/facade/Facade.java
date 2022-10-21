@@ -9,6 +9,7 @@ import visitors.NodeVisitor;
 import visitors.Reminder;
 import visitors.ReminderVisitor;
 import visitors.Trading;
+import iterators.ClassProductList;
 
 import java.io.*;
 import java.util.*;
@@ -84,6 +85,7 @@ public class Facade {
 		if (product.getnCategoryType() != -1) {
 			System.out.println("The following sellers are offering "+ product.getItem());
 //-------------------------------------------------------------------------
+
 			String trade = getCurrentUser() + ":" + product.getItem();
 			writeToFile(userProductLogFile, trade);
 			System.out.println("Trade added to user Product log file");
@@ -104,8 +106,9 @@ public class Facade {
 
 	public void viewTrading() throws IOException {
 		String line;
-		System.out.println("Whose trade would you like to view");
-		//print out buyers and sellers names
+		System.out.println("Whose trade would you like to view from the below list: ");
+		System.out.println(userCredentials.keySet());
+		System.out.println("Enter person's name: ");
 		String user = sc.next();
 		System.out.println("Printing out all trades of "+ user);
 		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/user-product.txt"));
@@ -197,28 +200,21 @@ public class Facade {
 	 */
 	public void createProductList() {
 		//check description
-		iterators.ClassProductList classProductList = new iterators.ClassProductList();
-		ProductIterator productIterator;
 		for(Map.Entry<String, ArrayList<String>> entry: menuItems.entrySet()) {
 			ArrayList<String> list = entry.getValue();
 			for(String item: list){
 				Product product = new Product();
 				product.setItem(item);
 				product.setnCategoryType(Integer.parseInt(productToNumberMap.get(entry.getKey())));
-				classProductList.add(product);
+				theProductList.add(product);
 			}
 		}
-		int i=0;
-		productIterator = new ProductIterator(classProductList);
-		productIterator.MoveToHead();
-		while (productIterator.hasNext()) {
-			Product product = productIterator.Next();
-			System.out.println("Product details : no. "+ i);
-			System.out.println(product.getItem());
-			System.out.println(product.getnCategoryType());
-			i+=1;
-		}
+	}
 
+	public void getProductList() {
+
+		ReminderVisitor reminderVisitor = new ReminderVisitor();
+		theProductList.accept(reminderVisitor, theProductList);
 	}
 
 	/**

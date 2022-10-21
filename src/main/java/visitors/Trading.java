@@ -9,6 +9,8 @@ public class Trading {
 	String tradeProduct;
 
 	public Trading(String user, String tradeProduct) {
+		this.user = user;
+		this.tradeProduct = tradeProduct;
 	}
 
 	public String getUser() {
