@@ -7,3 +7,11 @@ Produce:Apples
 Produce:Spinach
 Meat:Fish
 Perishables: Oranges
+Meat:Turkey
+Produce:-1
+Produce:-1
+Meat:Spinach
+Produce:Broccoli
+Meat:Banana
+Meat:Banana
+Meat:Banana

@@ -3,6 +3,7 @@ package product;
 import facade.Product;
 import facade.ProductMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -42,6 +43,6 @@ public abstract class Person {
 
 	}
 
-	public abstract Product createProductMenu(Map<String, ArrayList<String>> menuItems, String prodCategory, Map<String, String> productToNumberMap);
+	public abstract Product createProductMenu(Map<String, ArrayList<String>> menuItems, String prodCategory, Map<String, String> productToNumberMap) throws IOException;
 
 }

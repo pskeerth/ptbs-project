@@ -37,6 +37,7 @@ public class Facade {
 	Scanner sc = new Scanner(System.in);
 
 	String credentialsFilePath1 = "src/main/resources/buyers.txt";
+
 	String menuFilePath = "src/main/resources/meat-produce-menu.txt";
 	String sellerLoginsFilePath = "src/main/resources/sellers.txt";
 	String userProductLogFile = "src/main/resources/user-product.txt";
@@ -99,9 +100,13 @@ public class Facade {
 			writeToFile(userProductLogFile, trade);
 			System.out.println("Trade added to user Product log file");
 		} else if ((product.getnCategoryType() != -1) && (getUserType().equals("Seller"))){
-			discussBidding(product);
-			String buyerToSellTo = decideBidding();
-			submitBidding(product, buyerToSellTo);
+			ArrayList<String> buyerList = discussBidding(product);
+			if (buyerList != null && !buyerList.isEmpty()) {
+				String buyerToSellTo = decideBidding();
+				submitBidding(product, buyerToSellTo);
+			} else {
+				System.out.println("Buyer List for this product is empty");
+			}
 		} else {
 			System.out.println("Invalid trade");
 		}
@@ -154,13 +159,17 @@ public class Facade {
 		return buyerToSellTo;
 	}
 
+	public String getMenuFilePath() {
+		return menuFilePath;
+	}
 	/**
 	 *  
 	 */
-	public void discussBidding(Product product) {
+	public ArrayList<String> discussBidding(Product product) {
 		System.out.println("The following buyers want to buy "+ product.getItem());
 		ArrayList<String> buyerList = productToBuyerMap.get(product.getItem());
 		System.out.println(buyerList);
+		return buyerList;
 	}
 
 	/**
@@ -289,7 +298,6 @@ public class Facade {
 				System.out.println("This line contains too many args: " + line);
 			}
 		}
-		System.out.println("Printttt: "+productToBuyerMap);
 	}
 
 	private void attachBuyerToProduct(String tradeUser, String trade) {
