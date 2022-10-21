@@ -3,7 +3,7 @@ package visitors;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Trading {
+public class Trading extends Reminder{
 
 	String user;
 	String tradeProduct;

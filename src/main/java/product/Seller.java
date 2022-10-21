@@ -22,6 +22,11 @@ public class Seller extends Person {
 	}
 
 	public Product createProductMenu(Map<String, ArrayList<String>> menuItems, String prodCategory, Map<String, String> productToNumberMap) {
+		if(prodCategory.equals("Meat")) {
+			productMenu = new MeatProductMenu();
+		} else {
+			productMenu = new ProduceProductMenu();
+		}
 		System.out.println("Existing menu items:");
 		showMenu(menuItems);
 		System.out.println("Enter item to add");

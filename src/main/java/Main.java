@@ -8,9 +8,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         Facade facade = new Facade();
-        Product product;
         int choice;
-        String userType;
         String input;
 
         if (!facade.login()) {
@@ -24,12 +22,10 @@ public class Main {
         }
         System.out.println("Login Successful");
 
-        userType = facade.getUserType();
         while (true) {
-            System.out.println("Enter 0 to Add Trade, 1 to View Trade ");
+            System.out.println("Enter 0 to Add Trade, 1 to View Trade, -1 to quit ");
             choice = sc.nextInt();
             switch (choice) {
-
                 case 0:
                     facade.addTrading();
                     break;

@@ -24,7 +24,7 @@ public class Facade {
 
 	private String currentUser;
 
-	private ClassProductList theProductList;
+	private ClassProductList theProductList = new ClassProductList();
 
 	private Person thePerson;
 
@@ -50,14 +50,21 @@ public class Facade {
 		setCurrentUser(username);
 		System.out.println("Password :  ");
 		password = sc.next();
+		readFromFileforUserDetails(credentialsFilePath1, 0);
+		readFromFileforUserDetails(sellerLoginsFilePath, 1);
 		Login login = new Login();
 		result = login.validateUser(username, password, userCredentials);
 		if(result) {
 			UserType = (int) typeOfUser.get(username);
 		}
-		readFromFileforUserDetails(credentialsFilePath1, 0);
-		readFromFileforUserDetails(sellerLoginsFilePath, 1);
 		readMenuFile(menuFilePath);
+		readUserProductLogFile();
+		System.out.println("userplf: "+ userToProductsOfferedMap);
+		if (UserType == 0) {
+			thePerson = new Buyer();
+		} else {
+			thePerson = new Seller();
+		}
 		createProductList();
 		return result;
 	}
@@ -76,16 +83,16 @@ public class Facade {
 		String prodCategory = sc.next();
 		prodCategory = prodCategory.substring(0,1).toUpperCase() + prodCategory.substring(1);
 		nProductCategory = Integer.parseInt(productToNumberMap.get(prodCategory));
-		if (UserType == 0) {
-			thePerson = new Buyer();
-		} else {
-			thePerson = new Seller();
-		}
 		product = thePerson.createProductMenu(menuItems, prodCategory, productToNumberMap);
 		if (product.getnCategoryType() != -1) {
 			System.out.println("The following sellers are offering "+ product.getItem());
-//-------------------------------------------------------------------------
-
+			//sdfgdfgdgdfgd
+			for(String tradeUser: userToProductsOfferedMap.keySet()) {
+				ArrayList<String> offeringList = userToProductsOfferedMap.get(tradeUser);
+				if(offeringList.contains(product.getItem())) {
+					System.out.println();
+				}
+			}
 			String trade = getCurrentUser() + ":" + product.getItem();
 			writeToFile(userProductLogFile, trade);
 			System.out.println("Trade added to user Product log file");
@@ -124,7 +131,7 @@ public class Facade {
 					System.out.println(line);
 				}
 			} else {
-				System.out.println("ignoring line: " + line);
+				System.out.println("This line contains too many args: " + line);
 			}
 		}
 
@@ -257,7 +264,24 @@ public class Facade {
 				userCredentials.put(key, value);
 				typeOfUser.put(key, userType);
 			} else {
-				System.out.println("ignoring line: " + line);
+				System.out.println("This line contains too many args: " + line);
+			}
+		}
+	}
+
+	public void readUserProductLogFile() throws IOException {
+		String line;
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/user-product.txt"));
+		while ((line = bufferedReader.readLine()) != null) {
+			String[] split = line.split(":", 2);
+			if (split.length >= 2) {
+				String tradeUser = split[0];
+				String trade = split[1];
+				if(typeOfUser.get(tradeUser).equals(1)) {
+					attachProductToUser(tradeUser, trade);
+				}
+			} else {
+				System.out.println("This line contains too many args: " + line);
 			}
 		}
 	}
@@ -282,7 +306,7 @@ public class Facade {
 					i=i+1;
 				}
 			} else {
-				System.out.println("ignoring line: " + line);
+				System.out.println("This line contains too many args: " + line);
 			}
 		}
 	}
