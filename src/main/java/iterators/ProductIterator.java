@@ -11,6 +11,7 @@ public class ProductIterator implements ListIterator {
 	}
 
 	public boolean hasNext() {
+		System.out.println("---Iterator design pattern implemented here---");
 		if(pointer >= classProductList.size() - 1) {
 			return false;
 		}

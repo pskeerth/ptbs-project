@@ -1,13 +1,10 @@
 package facade;
 
-import iterators.ProductIterator;
 import product.Buyer;
-import product.MeatProductMenu;
 import product.Person;
 import product.Seller;
 import visitors.*;
 import iterators.ClassProductList;
-import visitors.Reminder;
 
 import java.io.*;
 import java.util.*;
@@ -36,13 +33,14 @@ public class Facade {
 
 	Scanner sc = new Scanner(System.in);
 
-	String credentialsFilePath1 = "src/main/resources/buyers.txt";
+	String buyerLoginsFilePath = "src/main/resources/BuyerInfo.txt";
 
-	String menuFilePath = "src/main/resources/meat-produce-menu.txt";
-	String sellerLoginsFilePath = "src/main/resources/sellers.txt";
-	String userProductLogFile = "src/main/resources/user-product.txt";
+	String menuFilePath = "src/main/resources/ProductInfo.txt";
+	String sellerLoginsFilePath = "src/main/resources/SellerInfo.txt";
+	String userProductLogFile = "src/main/resources/UserProduct.txt";
 
 	public boolean login() throws IOException {
+		System.out.println("---Facade design pattern implemented here---");
 		Boolean result;
 		String username;
 		String password;
@@ -51,7 +49,7 @@ public class Facade {
 		setCurrentUser(username);
 		System.out.println("Password :  ");
 		password = sc.next();
-		readFromFileforUserDetails(credentialsFilePath1, 0);
+		readFromFileforUserDetails(buyerLoginsFilePath, 0);
 		readFromFileforUserDetails(sellerLoginsFilePath, 1);
 		Login login = new Login();
 		result = login.validateUser(username, password, userCredentials);
@@ -65,6 +63,7 @@ public class Facade {
 		} else {
 			thePerson = new Seller();
 		}
+		System.out.println("---Factory Method design pattern implemented here---");
 		createProductList();
 		return result;
 	}
@@ -79,7 +78,7 @@ public class Facade {
 
 	public void addTrading() throws IOException {
 		Product product;
-		System.out.println("Enter product category : Eg Meat, Produce etc ..");
+		System.out.println("Enter product category : Meat or Produce");
 		String prodCategory = sc.next();
 		prodCategory = prodCategory.substring(0,1).toUpperCase() + prodCategory.substring(1);
 		nProductCategory = Integer.parseInt(productToNumberMap.get(prodCategory));
@@ -129,7 +128,7 @@ public class Facade {
 		System.out.println("Enter person's name: ");
 		String user = sc.next();
 		System.out.println("Printing out all trade log of user = "+ user);
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/user-product.txt"));
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/UserProduct.txt"));
 		while ((line = bufferedReader.readLine()) != null) {
 			String[] split = line.split(":", 2);
 			if (split.length >= 2) {
@@ -204,7 +203,7 @@ public class Facade {
 		System.out.println("Successfully created user");
 
 		if(userType.equals("Buyer")) {
-			fileToWriteTo = credentialsFilePath1;
+			fileToWriteTo = buyerLoginsFilePath;
 		} else {
 			fileToWriteTo = sellerLoginsFilePath;
 		}
@@ -282,7 +281,7 @@ public class Facade {
 
 	public void readUserProductLogFile() throws IOException {
 		String line;
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/user-product.txt"));
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/UserProduct.txt"));
 		while ((line = bufferedReader.readLine()) != null) {
 			String[] split = line.split(":", 2);
 			if (split.length >= 2) {
@@ -298,6 +297,7 @@ public class Facade {
 				System.out.println("This line contains too many args: " + line);
 			}
 		}
+		System.out.println("---Visitor design pattern implemented here---");
 	}
 
 	private void attachBuyerToProduct(String tradeUser, String trade) {

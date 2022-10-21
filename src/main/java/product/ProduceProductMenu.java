@@ -11,6 +11,7 @@ public class ProduceProductMenu implements ProductMenu {
 	 *  
 	 */
 	public void showMenu(Map menuItems) {
+		System.out.println("---Bridge design pattern implemented here---");
 		System.out.println("Produce Menu:");
 		for (Object key : menuItems.keySet()) {
 			if (key.equals("Produce")) {

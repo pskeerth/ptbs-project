@@ -1,0 +1,46 @@
+/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=52186:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -classpath /Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_333.jdk/Contents/Home/jre/lib/rt.jar:/Users/poornimasathyakeerthi/Desktop/SER 515/ptbs-project/target/classes:/Users/poornimasathyakeerthi/.m2/repository/mysql/mysql-connector-java/8.0.30/mysql-connector-java-8.0.30.jar:/Users/poornimasathyakeerthi/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar Main
+---Facade design pattern implemented here---
+Username :
+tutu
+Password :
+444
+---Visitor design pattern implemented here---
+---Factory Method design pattern implemented here---
+Login Successful
+Enter 0 to Add Trade, 1 to View Trade, -1 to quit
+0
+Enter product category : Meat or Produce
+Meat
+Existing menu items:
+---Bridge design pattern implemented here---
+Meat Product Menu:
+[Beef, Chicken, Ham, Fish, Turkey]
+Enter item to add, otherwise -1 to skip add
+-1
+Enter the product you want to sell
+Fish
+The following buyers want to buy Fish
+[ritu]
+Type name of buyer that you want to sell the item to:
+ritu
+Seller Trade removed from user Product log file because it was sold to ritu
+Added new product to products file
+Enter 0 to Add Trade, 1 to View Trade, -1 to quit
+0
+Enter product category : Meat or Produce
+Produce
+Existing menu items:
+---Bridge design pattern implemented here---
+Produce Menu:
+[Broccoli, Banana, Apples, Spinach, Broccoli]
+Enter item to add, otherwise -1 to skip add
+Eggplant
+Added new product to products file
+The following buyers want to buy Eggplant
+null
+Buyer List for this product is empty
+Added new product to products file
+Enter 0 to Add Trade, 1 to View Trade, -1 to quit
+-1
+
+Process finished with exit code 0
