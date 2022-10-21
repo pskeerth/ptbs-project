@@ -5,6 +5,10 @@ import product.Buyer;
 import product.MeatProductMenu;
 import product.Person;
 import product.Seller;
+import visitors.NodeVisitor;
+import visitors.Reminder;
+import visitors.ReminderVisitor;
+import visitors.Trading;
 
 import java.io.*;
 import java.util.*;
@@ -17,17 +21,18 @@ public class Facade {
 
 	private Product theSelectedProduct;
 
-	private int nProductCategory;
 	private String currentUser;
 
 	private ClassProductList theProductList;
 
 	private Person thePerson;
-	private MeatProductMenu meatProductMenu = new MeatProductMenu();
+
+	int nProductCategory;
 	HashMap userCredentials = new HashMap<String, String>();
 	HashMap typeOfUser = new HashMap<String, String>();
 	Map<String, String> productToNumberMap = new HashMap<>();
 	Map<String, ArrayList<String>> menuItems = new HashMap<>();
+	Map<String, ArrayList<String>> userToProductsOfferedMap = new HashMap<>();
 	Scanner sc = new Scanner(System.in);
 
 	String credentialsFilePath1 = "src/main/resources/buyers.txt";
@@ -77,6 +82,8 @@ public class Facade {
 		}
 		product = thePerson.createProductMenu(menuItems, prodCategory, productToNumberMap);
 		if (product.getnCategoryType() != -1) {
+			System.out.println("The following sellers are offering "+ product.getItem());
+//-------------------------------------------------------------------------
 			String trade = getCurrentUser() + ":" + product.getItem();
 			writeToFile(userProductLogFile, trade);
 			System.out.println("Trade added to user Product log file");
@@ -105,8 +112,12 @@ public class Facade {
 		while ((line = bufferedReader.readLine()) != null) {
 			String[] split = line.split(":", 2);
 			if (split.length >= 2) {
-				String key = split[0];
-				if(key.equals(user)) {
+				String tradeUser = split[0];
+				String trade = split[1];
+				if(typeOfUser.get(tradeUser).equals("1")) {
+					attachProductToUser(tradeUser, trade);
+				}
+				if(tradeUser.equals(user)) {
 					System.out.println(line);
 				}
 			} else {
@@ -213,8 +224,10 @@ public class Facade {
 	/**
 	 *  
 	 */
-	public void AttachProductToUser() {
-
+	public void attachProductToUser(String tradeUser, String trade) {
+		Trading trading = new Trading(tradeUser, trade);
+		ReminderVisitor reminderVisitor = new ReminderVisitor();
+		trading.accept(reminderVisitor, userToProductsOfferedMap);
 	}
 
 	/**
