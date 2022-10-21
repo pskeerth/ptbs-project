@@ -5,11 +5,9 @@ import product.Buyer;
 import product.MeatProductMenu;
 import product.Person;
 import product.Seller;
-import visitors.NodeVisitor;
-import visitors.Reminder;
-import visitors.ReminderVisitor;
-import visitors.Trading;
+import visitors.*;
 import iterators.ClassProductList;
+import visitors.Reminder;
 
 import java.io.*;
 import java.util.*;
@@ -34,6 +32,8 @@ public class Facade {
 	Map<String, String> productToNumberMap = new HashMap<>();
 	Map<String, ArrayList<String>> menuItems = new HashMap<>();
 	Map<String, ArrayList<String>> userToProductsOfferedMap = new HashMap<>();
+	Map<String, ArrayList<String>> productToBuyerMap = new HashMap<>();
+
 	Scanner sc = new Scanner(System.in);
 
 	String credentialsFilePath1 = "src/main/resources/buyers.txt";
@@ -59,7 +59,6 @@ public class Facade {
 		}
 		readMenuFile(menuFilePath);
 		readUserProductLogFile();
-		System.out.println("userplf: "+ userToProductsOfferedMap);
 		if (UserType == 0) {
 			thePerson = new Buyer();
 		} else {
@@ -84,18 +83,25 @@ public class Facade {
 		prodCategory = prodCategory.substring(0,1).toUpperCase() + prodCategory.substring(1);
 		nProductCategory = Integer.parseInt(productToNumberMap.get(prodCategory));
 		product = thePerson.createProductMenu(menuItems, prodCategory, productToNumberMap);
-		if (product.getnCategoryType() != -1) {
+		if ((product.getnCategoryType() != -1) && (getUserType().equals("Buyer"))) {
 			System.out.println("The following sellers are offering "+ product.getItem());
-			//sdfgdfgdgdfgd
 			for(String tradeUser: userToProductsOfferedMap.keySet()) {
 				ArrayList<String> offeringList = userToProductsOfferedMap.get(tradeUser);
 				if(offeringList.contains(product.getItem())) {
-					System.out.println();
+					System.out.println(tradeUser);
 				}
 			}
+			System.out.println("Type name of seller that you want to buy the item from: ");
+			String userToBuyFrom = sc.next();
+			String removeTrade = userToBuyFrom + ":" + product.getItem();
+			removeFromUserProductFile(removeTrade);
 			String trade = getCurrentUser() + ":" + product.getItem();
 			writeToFile(userProductLogFile, trade);
 			System.out.println("Trade added to user Product log file");
+		} else if ((product.getnCategoryType() != -1) && (getUserType().equals("Seller"))){
+			discussBidding(product);
+			String buyerToSellTo = decideBidding();
+			submitBidding(product, buyerToSellTo);
 		} else {
 			System.out.println("Invalid trade");
 		}
@@ -117,16 +123,12 @@ public class Facade {
 		System.out.println(userCredentials.keySet());
 		System.out.println("Enter person's name: ");
 		String user = sc.next();
-		System.out.println("Printing out all trades of "+ user);
+		System.out.println("Printing out all trade log of user = "+ user);
 		BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/user-product.txt"));
 		while ((line = bufferedReader.readLine()) != null) {
 			String[] split = line.split(":", 2);
 			if (split.length >= 2) {
 				String tradeUser = split[0];
-				String trade = split[1];
-				if(typeOfUser.get(tradeUser).equals("1")) {
-					attachProductToUser(tradeUser, trade);
-				}
 				if(tradeUser.equals(user)) {
 					System.out.println(line);
 				}
@@ -146,28 +148,28 @@ public class Facade {
 	/**
 	 *  
 	 */
-	public void decideBidding() {
-
+	public String decideBidding() {
+		System.out.println("Type name of buyer that you want to sell the item to: ");
+		String buyerToSellTo = sc.next();
+		return buyerToSellTo;
 	}
 
 	/**
 	 *  
 	 */
-	public void discussBidding() {
-
+	public void discussBidding(Product product) {
+		System.out.println("The following buyers want to buy "+ product.getItem());
+		ArrayList<String> buyerList = productToBuyerMap.get(product.getItem());
+		System.out.println(buyerList);
 	}
 
 	/**
 	 *  
 	 */
-	public void submitBidding() {
-
-	}
-
-	/**
-	 *  
-	 */
-	public void remind() {
+	public void submitBidding(Product product, String buyerToSellTo) {
+		String removeTrade = getCurrentUser() + ":" + product.getItem();
+		removeFromUserProductFile(removeTrade);
+		System.out.println("Seller Trade removed from user Product log file because it was sold to "+ buyerToSellTo);
 
 	}
 
@@ -280,10 +282,20 @@ public class Facade {
 				if(typeOfUser.get(tradeUser).equals(1)) {
 					attachProductToUser(tradeUser, trade);
 				}
+				if(typeOfUser.get(tradeUser).equals(0)) {
+					attachBuyerToProduct(tradeUser, trade);
+				}
 			} else {
 				System.out.println("This line contains too many args: " + line);
 			}
 		}
+		System.out.println("Printttt: "+productToBuyerMap);
+	}
+
+	private void attachBuyerToProduct(String tradeUser, String trade) {
+		ProductToBuyer productToBuyer = new ProductToBuyer(tradeUser, trade);
+		ReminderVisitor reminderVisitor = new ReminderVisitor();
+		productToBuyer.accept(reminderVisitor, productToBuyerMap);
 	}
 
 	public void readMenuFile(String fileToReadPath) throws IOException {
@@ -309,6 +321,10 @@ public class Facade {
 				System.out.println("This line contains too many args: " + line);
 			}
 		}
+	}
+
+	public void removeFromUserProductFile(String removeTrade) {
+		//remove from file te line remove trade
 	}
 
 

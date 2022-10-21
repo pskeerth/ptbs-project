@@ -15,6 +15,6 @@ public abstract class NodeVisitor {
 
 	public abstract void visitTrading(Trading trading, Map<String, ArrayList<String>> userToProductsOfferedMap);
 
-	public abstract void visitorFacade(Facade facade);
+	public abstract void visitorFacade(ProductToBuyer productToBuyer, Map<String, ArrayList<String>> productToBuyerMap);
 
 }

@@ -43,7 +43,15 @@ public class ReminderVisitor extends NodeVisitor {
 		}
 	}
 
-	public void visitorFacade(Facade facade) {
+	public void visitorFacade(ProductToBuyer productToBuyer, Map<String, ArrayList<String>> productToBuyerMap) {
+
+		if(productToBuyerMap.containsKey(productToBuyer.getTradeProduct())) {
+			ArrayList<String> buyersOfferingToBuy = productToBuyerMap.get(productToBuyer.getTradeProduct());
+			buyersOfferingToBuy.add(productToBuyer.getUser());
+			productToBuyerMap.put(productToBuyer.getTradeProduct(), buyersOfferingToBuy);
+		} else {
+			productToBuyerMap.put(productToBuyer.getTradeProduct(), new ArrayList<>(Arrays.asList(productToBuyer.getUser())));
+		}
 
 	}
 
