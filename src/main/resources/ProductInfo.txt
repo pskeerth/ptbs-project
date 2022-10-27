@@ -1,0 +1,14 @@
+Meat:Beef
+Meat:Chicken
+Meat:Ham
+Produce:Broccoli
+Produce:Banana
+Produce:Apples
+Produce:Spinach
+Meat:Fish
+Meat:Turkey
+Produce:Broccoli
+Meat:Fish
+Produce:Eggplant
+Produce:Eggplant
+Meat:Spinach

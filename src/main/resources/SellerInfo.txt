@@ -1,0 +1,5 @@
+tutu:444
+mini:222
+lola:111
+warner:222
+ppp:222
