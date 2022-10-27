@@ -1,0 +1,15 @@
+ritu:Chicken
+ritu:Apples
+ritu:Banana
+tutu:Spinach
+tutu:Fish
+ritu:Ham
+ppp:Apples
+ppp:Chicken
+mini:Banana
+mini:Fish
+ritu:Spinach
+ritu:Fish
+qew:Spinach
+popp:Chicken
+ritu:Fish
